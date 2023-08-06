@@ -54,7 +54,7 @@ void loadNamesFromFile(char* filename, char array[][MAX_NAME_LEN], int numNames)
 }
 // generate full name
 // Rakim
-char* generate_full_name(char first_names[20][MAX_NAME_LEN], char last_names[20][MAX_NAME_LEN])
+char* generateFullName(char first_names[20][MAX_NAME_LEN], char last_names[20][MAX_NAME_LEN])
 {
     srand(time(NULL));
     int i = randval()%20;
@@ -75,7 +75,8 @@ char* getRandomString(char names[][MAX_NAME_LEN], int range)
 
 // Cecily and Sindhu
 // Function to generate a random student record
-struct Student generateStudent(int id) {  
+struct Student generateStudent(int id) 
+{  
     struct Student student;
 
     // Load data from files
@@ -93,7 +94,7 @@ struct Student generateStudent(int id) {
     // Generate student details
     srand(time(NULL));
     student.id = id;
-    strcpy(student.name, generate_full_name(firstNames, lastNames));
+    strcpy(student.name, generateFullName(firstNames, lastNames));
     strcpy(student.hostel, getRandomString(hostelNames, 5));
     strcpy(student.course, getRandomString(courses, 5));
     student.roomNumber = randval() % 400 + 101;
@@ -104,9 +105,11 @@ struct Student generateStudent(int id) {
 }
 
 // Function to perform registration
-void registration(struct Student student) {
+void registration(struct Student student) 
+{
     FILE *file = fopen("disk", "a");
-    if (file == NULL) {
+    if (file == NULL) 
+    {
         perror("Error opening database file");
         exit(0);
     }
@@ -117,14 +120,16 @@ void registration(struct Student student) {
     fclose(file);
 }
 
-double GetTime() {
+double GetTime() 
+{
     struct timeval t;
     int rc = gettimeofday(&t, NULL);
     assert(rc == 0);
     return (double) t.tv_sec + (double) t.tv_usec/1e6;
 }
 
-void Spin(int howlong) {
+void Spin(int howlong) 
+{
     double t = GetTime();
     while ((GetTime() - t) < (double) howlong); // do nothing in loop
 }
@@ -133,7 +138,8 @@ void Spin(int howlong) {
 void generate()
 {
     // Generate and register 100 students
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 100; i++) 
+    {
         struct Student student = generateStudent(i+1);
         //Spin(1);
         registration(student);

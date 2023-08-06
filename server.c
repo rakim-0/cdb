@@ -7,6 +7,7 @@
 
 // Functional Prototypes
 void server();
+void registerStudent();
 int search(int id);
 void update(int id);
 void delete(int id);
@@ -24,6 +25,7 @@ void server()
         switch(op_id)
         {
             case '0':
+                registerStudent();
                 break;
 
             case '1':
@@ -45,11 +47,28 @@ void server()
     }
 }
 
+// Register a user and update the file accordingly
+// First get the last roll no. used and then use generate_student(id) to write it to the file.
+// Use printFile to see if the file is updated.
+void registerStudent()
+{
+    FILE* db = fopen("disk", "r");
+    if (db == NULL) 
+    {
+        perror("Error opening database file");
+        exit(0);
+    }
+    fclose(db);
+    printFile("disk");
+    return 0;
+}
+
 // Search the file and return 1 if found and 0 if not
 int search(int id)
 {
     FILE* db = fopen("disk", "r");
-    if (db == NULL) {
+    if (db == NULL) 
+    {
         perror("Error opening database file");
         exit(0);
     }
@@ -82,7 +101,8 @@ void update(int id)
      *
      */
     FILE* db = fopen("disk", "r+");
-    if (db == NULL) {
+    if (db == NULL) 
+    {
         perror("Error opening database file");
         exit(0);
     }
@@ -124,13 +144,15 @@ void delete(int id)
      *
      */
     FILE* db = fopen("disk", "r");
-    FILE* db_temp = fopen("disk.tmp", "w");
+    FILE* dbTemp = fopen("disk.tmp", "w");
 
-    if (db == NULL) {
+    if (db == NULL) 
+    {
         perror("Error opening database file");
         exit(0);
     }
-    if (db_temp == NULL) {
+    if (dbTemp == NULL) 
+    {
         perror("Error opening database file");
         exit(0);
     }
@@ -140,12 +162,12 @@ void delete(int id)
     {
         if (temp.id != id)
         {
-            fwrite(&temp, 1, sizeof(struct Student), db_temp);
+            fwrite(&temp, 1, sizeof(struct Student), dbTemp);
         }
     }
 
     fclose(db);
-    fclose(db_temp);
+    fclose(dbTemp);
     remove("disk");
     rename("disk.tmp", "disk");
     return;
@@ -161,7 +183,7 @@ void printFile(char* filename)
     struct Student temp;
     while(fread(&temp, 1, sizeof(struct Student), db) && sizeof(temp) == sizeof(struct Student))
     {
-        printf("%d\n", temp.id);
+        printf("%d\n: ", temp.id, temp.name);
         if (temp.id == 5)
         {
             break;

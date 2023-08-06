@@ -8,7 +8,8 @@
 
 // Define a structure to hold student information   
 // Cecily and Sindhu
-struct Student {
+struct Student 
+{
     int id;
     char name[MAX_NAME_LEN];
     char hostel[MAX_HOSTEL_LEN];
