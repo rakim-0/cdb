@@ -1,6 +1,10 @@
 CC = gcc
 OPTIONS = -Wall -Wextra -Werror
 
+main: main.c 
+	$(CC) -Wall main.c -o bin/main
+	./bin/main
+
 server: server.c 
 	$(CC) -Wall server.c -o bin/server
 	./bin/server
