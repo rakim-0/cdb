@@ -60,7 +60,6 @@ void registerStudent()
     }
     fclose(db);
     printFile("disk");
-    return 0;
 }
 
 // Search the file and return 1 if found and 0 if not
@@ -183,11 +182,7 @@ void printFile(char* filename)
     struct Student temp;
     while(fread(&temp, 1, sizeof(struct Student), db) && sizeof(temp) == sizeof(struct Student))
     {
-        printf("%d\n: ", temp.id, temp.name);
-        if (temp.id == 5)
-        {
-            break;
-        }
+        printf("%d: %s\n", temp.id, temp.name);
     }
     fclose(db);
 }
