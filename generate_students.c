@@ -137,7 +137,21 @@ void Spin(int howlong)
 
 void generate()
 {
-    // Generate and register 100 students
+    FILE *file = fopen("disk", "a");
+    if (file == NULL) 
+    {
+        perror("Error opening database file");
+        exit(0);
+    }
+    fseek(file, -sizeof(struct Student), SEEK_CUR);
+    struct Student temp;
+    fread(&temp, 1, sizeof(struct Student), file);
+    if (temp.id >= 100)
+    {
+        fclose(file);
+        return;
+    }
+
     for (int i = 0; i < 100; i++) 
     {
         struct Student student = generateStudent(i+1);
@@ -146,5 +160,6 @@ void generate()
     }
 
     printf("Registration complete for 100 students.\n");
+    fclose(file);
 }
 #endif
