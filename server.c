@@ -1,3 +1,5 @@
+// Implemented by Rakim
+
 #ifndef SERVER
 #define SERVER
 
@@ -33,14 +35,15 @@ void server()
         //op_id = '1';
         st_id = temp.stdID;
         op_id = '0'+temp.opID;
-        // if (op_id == '2')
-        // {
-        //     printf("%c %d %d\n", op_id, st_id, temp.roomNo);
-        // }
-        // if (op_id = '1')
-        // {
-        //     printf("%c %d\n", op_id, st_id);
-        // }
+
+        if (op_id == '2')
+        {
+            printf("%c %d %d\n", op_id, st_id, temp.roomNo);
+        }
+        else
+        {
+            printf("%c %d\n", op_id, st_id);
+        }
         switch(op_id)
         {
             case '0':
