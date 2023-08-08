@@ -8,3 +8,6 @@ temp.c
 Assignment-Code.zip
 bin/*.o
 Makefile.BBKKPP
+assignment-v0.zip
+.*
+!/.gitignore
