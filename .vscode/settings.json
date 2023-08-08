@@ -4,6 +4,9 @@
         "stdlib.h": "c",
         "stdio.h": "c",
         "hash_map": "c",
-        "algorithm": "c"
+        "algorithm": "c",
+        "unistd.h": "c",
+        "string.h": "c",
+        "tuple.h": "c"
     }
 }

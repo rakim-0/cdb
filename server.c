@@ -25,7 +25,7 @@ void server()
     tuple temp;
     int count = 0;
     double time = GetTime();
-    int sum = 0;
+    // int sum = 0;
     while (fread(&temp, 1, sizeof(tuple), waitingQueue) == sizeof(tuple))
     {
         //fputs("> ", stdout);
