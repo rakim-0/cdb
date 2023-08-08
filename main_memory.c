@@ -19,7 +19,7 @@ void search(node** head, int id);
 void update(node** head, int id, int hostelRoomNumber);
 void printList(node* head);
 void freeList(node** head);
-struct Student searchFile(int id);
+struct Student searchFile(int id, int flag);
 void updateFile(int id, int newRoomNumber);
 
 // int main()
@@ -40,7 +40,7 @@ void updateFile(int id, int newRoomNumber);
 // }
 
 // Search the file and return 1 if found and 0 if not
-struct Student searchFile(int id)
+struct Student searchFile(int id, int flag)
 {
     FILE* db = fopen("disk", "r");
     if (db == NULL) 
@@ -53,9 +53,12 @@ struct Student searchFile(int id)
     {
         if (temp.id == id)
         {
-            printf("%d, %s, %s, %s, %d, %s, Year %d\n", temp.id, temp.name, 
-                temp.hostel, temp.course, temp.roomNumber, temp.dob, temp.yearOfStudy);
-                fclose(db);
+            if (flag == 0)
+            {
+                printf("%d, %s, %s, %s, %d, %s, Year %d\n", temp.id, temp.name, 
+                    temp.hostel, temp.course, temp.roomNumber, temp.dob, temp.yearOfStudy);
+            }
+            fclose(db);
             return temp;
         }
     }
@@ -169,7 +172,7 @@ void search(node** head, int id)
     }
     else
     {
-        struct Student tempStd = searchFile(id);
+        struct Student tempStd = searchFile(id, 0);
         addNode(head, tempStd);
     }
     return;
@@ -195,7 +198,7 @@ void update(node** head, int id, int hostelRoomNumber)
     }
     else
     {
-        struct Student tempStd = searchFile(id);
+        struct Student tempStd = searchFile(id, 1);
         tempStd.roomNumber = hostelRoomNumber;
         addNode(head, tempStd);
     }
