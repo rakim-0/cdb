@@ -8,6 +8,11 @@ main: main.c
 
 server: server.c 
 	$(CC) -Wall server.c -o bin/server
+	
+server_user: server_user.c 
+	$(CC) -Wall server_user.c -o bin/server_user
+	./bin/server_user
+
 
 course: course.c
 	$(CC) -Wall course.c -o bin/course
@@ -23,6 +28,10 @@ a: generate_random.c
 
 b: generate_regular.c
 	$(CC) -Wall -g generate_regular.c -o bin/b
+
+clear: 
+	rm disk operation_queue.txt waiting_queue
+
 # build:
 # 	@$(CC) -Wall -g $(MODULE).c -o bin/$(MODULE)
 # 	@./bin/$(MODULE)
