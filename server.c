@@ -5,12 +5,14 @@
 #include <stdlib.h>
 #include "student.h"
 #include "main_memory.c"
+#include "tuple.h"
+#include "generate_students.c"
 
 // Functional Prototypes
 void server();
 void registerStudent();
 
-void delete(int id);
+void delete(int id, node* head);
 void printFile(char* filename);
 
 void server()
@@ -18,11 +20,27 @@ void server()
     node *head = NULL;
     char op_id = 0; // OPERATION ID, 0->registration, 1-> search, 2-> update, 3-> delete.
     int st_id = 0;
-    while(1)
+
+    FILE *waitingQueue = fopen("waiting_queue", "r");
+    tuple temp;
+    int count = 0;
+    double time = GetTime();
+    int sum = 0;
+    while (fread(&temp, 1, sizeof(tuple), waitingQueue) == sizeof(tuple))
     {
         //fputs("> ", stdout);
-        scanf("%c", &op_id);
+        //scanf("%c", &op_id);
         //op_id = '1';
+        st_id = temp.stdID;
+        op_id = '0'+temp.opID;
+        // if (op_id == '2')
+        // {
+        //     printf("%c %d %d\n", op_id, st_id, temp.roomNo);
+        // }
+        // if (op_id = '1')
+        // {
+        //     printf("%c %d\n", op_id, st_id);
+        // }
         switch(op_id)
         {
             case '0':
@@ -30,27 +48,40 @@ void server()
                 break;
 
             case '1':
-                scanf("%d", &st_id);
+                //scanf("%d", &st_id);
                 search(&head, st_id);
                 break;
 
             case '2':
-                scanf("%d", &st_id);
-                int newRoomNumber = 0;
-                scanf("%d\n", &newRoomNumber);
+                //scanf("%d", &st_id);
+                int newRoomNumber = temp.roomNo;
+                //scanf("%d\n", &newRoomNumber);
                 update(&head, st_id, newRoomNumber);
                 break;
                 
             case'3':
-                scanf("%d", &st_id);
-                delete(st_id);
+                //scanf("%d", &st_id);
+                delete(st_id, head);
                 //printFile("disk.tmp");
                 break;
             case '4':
                 printFile("disk");
                 break;
         }
+        count++;
+        if (GetTime()-time >= 1)
+        {
+            printf("Throughput: %d\n", count);
+            count = 0;
+            time = GetTime();
+        }
     }
+
+    while (head != NULL)
+    {
+        removeNode(&head);
+    }
+    printf("Throughput: %lf\n", (1.0*count)/(GetTime()-time));
 }
 
 // Register a user and update the file accordingly
@@ -81,7 +112,7 @@ void registerStudent()
 
 // Delete a line from the file 
 
-void delete(int id)
+void delete(int id, node* head)
 {
     /* 
      *
@@ -121,6 +152,10 @@ void delete(int id)
     fclose(dbTemp);
     remove("disk");
     rename("disk.tmp", "disk");
+    while(head != NULL)
+    {
+        removeNode(&head);
+    }
     return;
 }
 
