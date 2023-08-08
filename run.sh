@@ -1,6 +1,4 @@
-rm disk
-rm operation_queue.txt
-
+make clear
 make -B main
 
 make a 
@@ -12,7 +10,8 @@ while true; do
     pa=$(pgrep -x "a")
     pb=$(pgrep -x "b")
     if [ -z "$pa" ] && [ -z "$pb" ]; then
-        ./bin/main
+            echo "Done with waiting queue!"
+            ./bin/main
         break;
     fi
 done
