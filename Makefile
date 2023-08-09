@@ -30,7 +30,10 @@ b: generate_regular.c
 	$(CC) -Wall -g generate_regular.c -o bin/b
 
 clear: 
-	rm disk operation_queue.txt waiting_queue
+	rm disk operation_queue.txt waiting_queue output.txt
+
+clear2: 
+	rm disk log.txt
 
 # build:
 # 	@$(CC) -Wall -g $(MODULE).c -o bin/$(MODULE)

@@ -1,34 +1,52 @@
+// Implemented by Rakim
+
 #ifndef SERVER
 #define SERVER
 
 #include <stdio.h>
 #include <stdlib.h>
 #include "student.h"
-#include "main_memory.c"
+#include "tuple.h"
+#include "generate_students.c"
+#include "log.c"
+#include "usrcode/main_mem_cpy.c"
+
 
 // Functional Prototypes
 void server();
 void registerStudent();
 
-void delete(int id);
+void delete(int id, node* head);
 void printFile(char* filename);
 
 int main()
 {
     server();
 }
-
 void server()
 {
     node *head = NULL;
     char op_id = 0; // OPERATION ID, 0->registration, 1-> search, 2-> update, 3-> delete.
     int st_id = 0;
+
+    FILE *waitingQueue = fopen("waiting_queue", "r");
+    tuple temp;
+    int count = 0;
+    double time = GetTime();
+    // int sum = 0;
     while (1)
     {
         //fputs("> ", stdout);
         scanf("%c", &op_id);
         //op_id = '1';
-
+        // if (op_id == '2')
+        // {
+        //     printf("%c %d %d\n", op_id, st_id, temp.roomNo);
+        // }
+        // else
+        // {
+        //     printf("%c %d\n", op_id, st_id);
+        // }
         switch(op_id)
         {
             case '0':
@@ -49,7 +67,7 @@ void server()
                 
             case'3':
                 scanf("%d", &st_id);
-                delete(st_id);
+                delete(st_id, head);
                 //printFile("disk.tmp");
                 break;
             case '4':
@@ -60,8 +78,10 @@ void server()
 
     while (head != NULL)
     {
-        removeNode(&head);
-    }  
+        removeNode(&head, 1);
+    }
+    printf("Mean Response Time: %lf\n", (GetTime()-time)/(1.0*count));
+    printf("Throughput: %lf\n", (1.0*count)/(GetTime()-time));
 }
 
 // Register a user and update the file accordingly
@@ -69,6 +89,7 @@ void server()
 // Use printFile to see if the file is updated.
 void registerStudent()
 {
+    writeTwo();
     FILE* db = fopen("disk", "r+");
     if (db == NULL) 
     {
@@ -92,7 +113,7 @@ void registerStudent()
 
 // Delete a line from the file 
 
-void delete(int id)
+void delete(int id, node* head)
 {
     /* 
      *
@@ -107,6 +128,7 @@ void delete(int id)
      */
     FILE* db = fopen("disk", "r");
     FILE* dbTemp = fopen("disk.tmp", "w");
+    writeTwo();
 
     if (db == NULL) 
     {
@@ -132,6 +154,17 @@ void delete(int id)
     fclose(dbTemp);
     remove("disk");
     rename("disk.tmp", "disk");
+    while(head != NULL)
+    {
+        if (head->student.id != id)
+        {
+            removeNode(&head, 1);
+        }
+        else
+        {
+            removeNode(&head, 0);
+        }
+    }
     return;
 }
 

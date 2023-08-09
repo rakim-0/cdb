@@ -5,8 +5,8 @@
 #include <stdlib.h>
 //#include "main.c"
 
-#include "log.c"
-#include "generate_students.c"
+#include "../log.c"
+#include "../generate_students.c"
 typedef struct Node
 {
     struct Student student;    
@@ -56,15 +56,15 @@ struct Student searchFile(int id, int flag)
         {
             if (flag == 0)
             {
-                // printf("%d, %s, %s, %s, %d, %s, Year %d\n", temp.id, temp.name, 
-                //     temp.hostel, temp.course, temp.roomNumber, temp.dob, temp.yearOfStudy);
+                printf("%d, %s, %s, %s, %d, %s, Year %d\n", temp.id, temp.name, 
+                    temp.hostel, temp.course, temp.roomNumber, temp.dob, temp.yearOfStudy);
             }
             fclose(db);
             return temp;
         }
     }
     
-    // printf("NOT FOUND!!\n");
+    printf("NOT FOUND!!\n");
     fclose(db);
     temp.id = -1;
     return temp;
@@ -138,7 +138,7 @@ void removeNode(node** head, int update)
 {
     struct Student std = (*head)->student;
     *head = (*head)->next;
-    if (update == 1)
+    if (update == 10)
     {
         updateFile(std.id, std.roomNumber);
     }  
@@ -171,9 +171,9 @@ void search(node** head, int id)
 
     if (f == 1)
     {
-        // struct Student tempStd = temp->student;
-        // printf("%d, %s, %s, %s, %d, %s, Year %d\n", tempStd.id, tempStd.name, 
-        //         tempStd.hostel, tempStd.course, tempStd.roomNumber, tempStd.dob, tempStd.yearOfStudy);
+        struct Student tempStd = temp->student;
+        printf("%d, %s, %s, %s, %d, %s, Year %d\n", tempStd.id, tempStd.name, 
+                tempStd.hostel, tempStd.course, tempStd.roomNumber, tempStd.dob, tempStd.yearOfStudy);
     }
     else
     {
@@ -217,7 +217,7 @@ void freeList(node** head)
 {
     if (head != NULL)
     {
-        removeNode(head, 0);
+        removeNode(head, 1);
     }
 }
 #endif

@@ -5,10 +5,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "log.c"
 #include "student.h"
 #include "main_memory.c"
 #include "tuple.h"
 #include "generate_students.c"
+
 
 // Functional Prototypes
 void server();
@@ -35,15 +37,15 @@ void server()
         //op_id = '1';
         st_id = temp.stdID;
         op_id = '0'+temp.opID;
-
-        if (op_id == '2')
-        {
-            printf("%c %d %d\n", op_id, st_id, temp.roomNo);
-        }
-        else
-        {
-            printf("%c %d\n", op_id, st_id);
-        }
+        int newRoomNumber = temp.roomNo;
+        // if (op_id == '2')
+        // {
+        //     printf("%c %d %d\n", op_id, st_id, temp.roomNo);
+        // }
+        // else
+        // {
+        //     printf("%c %d\n", op_id, st_id);
+        // }
         switch(op_id)
         {
             case '0':
@@ -57,7 +59,6 @@ void server()
 
             case '2':
                 //scanf("%d", &st_id);
-                int newRoomNumber = temp.roomNo;
                 //scanf("%d\n", &newRoomNumber);
                 update(&head, st_id, newRoomNumber);
                 break;
@@ -82,8 +83,9 @@ void server()
 
     while (head != NULL)
     {
-        removeNode(&head);
+        removeNode(&head, 1);
     }
+    printf("Mean Response Time: %lf\n", (GetTime()-time)/(1.0*count));
     printf("Throughput: %lf\n", (1.0*count)/(GetTime()-time));
 }
 
@@ -92,6 +94,7 @@ void server()
 // Use printFile to see if the file is updated.
 void registerStudent()
 {
+    writeTwo();
     FILE* db = fopen("disk", "r+");
     if (db == NULL) 
     {
@@ -130,6 +133,7 @@ void delete(int id, node* head)
      */
     FILE* db = fopen("disk", "r");
     FILE* dbTemp = fopen("disk.tmp", "w");
+    writeTwo();
 
     if (db == NULL) 
     {
@@ -157,7 +161,14 @@ void delete(int id, node* head)
     rename("disk.tmp", "disk");
     while(head != NULL)
     {
-        removeNode(&head);
+        if (head->student.id != id)
+        {
+            removeNode(&head, 1);
+        }
+        else
+        {
+            removeNode(&head, 0);
+        }
     }
     return;
 }
