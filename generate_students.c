@@ -12,7 +12,6 @@
 #include "student.h"
 
 // Function to load names from a file into an array
-// Rishab and Rakim
 
 
 unsigned int randval()
@@ -52,8 +51,7 @@ void loadNamesFromFile(char* filename, char array[][MAX_NAME_LEN], int numNames)
     }
     fclose(file);
 }
-// generate full name
-// Rakim
+
 char* generateFullName(char first_names[20][MAX_NAME_LEN], char last_names[20][MAX_NAME_LEN])
 {
     srand(time(NULL));
@@ -65,7 +63,6 @@ char* generateFullName(char first_names[20][MAX_NAME_LEN], char last_names[20][M
     return name;
 }
 
-// Rishab
 char* getRandomString(char names[][MAX_NAME_LEN], int range)
 {
     srand(time(NULL));
@@ -73,25 +70,20 @@ char* getRandomString(char names[][MAX_NAME_LEN], int range)
     return names[num];
 }
 
-// Cecily and Sindhu
-// Function to generate a random student record
 struct Student generateStudent(int id) 
 {  
     struct Student student;
 
-    // Load data from files
     char firstNames[20][MAX_NAME_LEN];
     char lastNames[20][MAX_NAME_LEN];
     char hostelNames[5][MAX_NAME_LEN];
     char courses[5][MAX_NAME_LEN];
 
-    // Load data from files (you need to create these files)
     loadNamesFromFile("names/firstname.txt", firstNames, 20);
     loadNamesFromFile("names/lastname.txt", lastNames, 20);
     loadNamesFromFile("names/hostelnames.txt", hostelNames, 5);
     loadNamesFromFile("names/coursenames.txt", courses, 5);
  
-    // Generate student details
     srand(time(NULL));
     student.id = id;
     strcpy(student.name, generateFullName(firstNames, lastNames));
@@ -104,7 +96,6 @@ struct Student generateStudent(int id)
     return student;
 }
 
-// Function to perform registration
 void registration(struct Student student) 
 {
     FILE *file = fopen("disk", "a");
@@ -114,8 +105,6 @@ void registration(struct Student student)
         exit(0);
     }
     
-    //fprintf(file, "%d, %s, %s, %s, %d, %s, Year %d\n", student.id, student.name, student.hostel, student.course,
-            //student.roomNumber, student.dob, student.yearOfStudy);
     fwrite(&student, 1, sizeof(struct Student), file);
     fclose(file);
 }

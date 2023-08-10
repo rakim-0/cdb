@@ -14,8 +14,8 @@ while true; do
     pb=$(pgrep -x "b")
     if [ -z "$pa" ] && [ -z "$pb" ]; then
             echo "Done with waiting queue!"
-            echo "DEPORTES: Sports Club"  >> output.txt
-            echo "---------------------" >> output.txt
+            echo "DEPORTES: Football Club"  >> output.txt
+            echo "-----------------------" >> output.txt
             echo "Scenario 1:" >> output.txt
             echo "" >> output.txt
             ./bin/main >> output.txt

@@ -7,7 +7,6 @@
 #define MAX_COURSE_LEN 20
 
 // Define a structure to hold student information   
-// Cecily and Sindhu
 struct Student 
 {
     int id;
