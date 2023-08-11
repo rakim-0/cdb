@@ -83,7 +83,7 @@ void server()
 
     while (head != NULL)
     {
-        removeNode(&head, 1);
+        removeHeadNode(&head, 1);
     }
     printf("Mean Response Time: %lf\n", (GetTime()-time)/(1.0*count));
     printf("Throughput: %lf\n", (1.0*count)/(GetTime()-time));
@@ -159,15 +159,16 @@ void delete(int id, node* head)
     fclose(dbTemp);
     remove("disk");
     rename("disk.tmp", "disk");
-    while(head != NULL)
+    
+    if (head != NULL)
     {
         if (head->student.id != id)
         {
-            removeNode(&head, 1);
+            removeHeadNode(&head, 1);
         }
         else
         {
-            removeNode(&head, 0);
+            removeHeadNode(&head, 0);
         }
     }
     return;

@@ -15,13 +15,14 @@ typedef struct Node
 
 node* newNode(struct Student newStudent);
 void addNode(node** head, struct Student std);
-void removeNode(node** head, int update);
+void removeHeadNode(node** head, int update);
 void search(node** head, int id);
 void update(node** head, int id, int hostelRoomNumber);
 void printList(node* head);
 void freeList(node** head);
 struct Student searchFile(int id, int flag);
 void updateFile(int id, int newRoomNumber);
+void deleteNode(node** head, int id);
 
 // int main()
 // {
@@ -29,15 +30,14 @@ void updateFile(int id, int newRoomNumber);
 //     // head->student = std;
 //     // head->next = NULL;
 //     node *head = NULL;
-//     for (int i = 1; i <= 6; i++)
+//     for (int i = 1; i <= 5; i++)
 //     {
 //         struct Student std = generateStudent(i);
 //         addNode(&head, std);
 //     }
+//     deleteNode(&head, 3);
 //     printList(head);
-//     search(&head, 1);
 //     //search(head, 15);
-//     printList(head);
 // }
 
 // Search the file and return 1 if found and 0 if not
@@ -130,11 +130,11 @@ void addNode(node** head, struct Student std)
     //printf("Count: %d\n", count);
 
     if (count >= 5)
-        removeNode(head, 1);
+        removeHeadNode(head, 1);
     temp->next = newNode;
 }
 
-void removeNode(node** head, int update)
+void removeHeadNode(node** head, int update)
 {
     struct Student std = (*head)->student;
     *head = (*head)->next;
@@ -213,11 +213,29 @@ void update(node** head, int id, int hostelRoomNumber)
     return;
 }
 
-void freeList(node** head)
+void deleteNode(node** head, int id)
 {
-    if (head != NULL)
+    node* prev = *head;
+    if (prev->student.id == id)
     {
-        removeNode(head, 0);
+        *head = (*head)->next;
+        free(prev);
+    }
+    else
+    {
+        node* temp = prev->next;
+        while (prev != NULL)
+        {
+            temp = prev->next;
+            if (temp != NULL)
+            {
+                if (temp->student.id == id)
+                {
+                    prev->next = temp->next;
+                }
+            }
+            prev = prev->next;
+        }
     }
 }
 #endif

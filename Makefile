@@ -4,7 +4,7 @@ OPTIONS = -Wall -Wextra -Werror
 all: server main course memory
 
 main: main.c 
-	$(CC) -Wall main.c -o bin/main
+	$(CC) -Wall -g main.c -o bin/main
 
 server: server.c 
 	$(CC) -Wall server.c -o bin/server

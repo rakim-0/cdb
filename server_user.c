@@ -5,11 +5,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "log.c"
 #include "student.h"
+#include "usrcode/main_mem_cpy.c"
 #include "tuple.h"
 #include "generate_students.c"
-#include "log.c"
-#include "usrcode/main_mem_cpy.c"
 
 
 // Functional Prototypes
@@ -21,16 +21,18 @@ void printFile(char* filename);
 
 int main()
 {
+    //generate();
     server();
 }
+
 void server()
 {
     node *head = NULL;
     char op_id = 0; // OPERATION ID, 0->registration, 1-> search, 2-> update, 3-> delete.
     int st_id = 0;
 
-    FILE *waitingQueue = fopen("waiting_queue", "r");
-    tuple temp;
+    // FILE *waitingQueue = fopen("waiting_queue", "r");
+    // tuple temp;
     int count = 0;
     double time = GetTime();
     // int sum = 0;
@@ -39,6 +41,9 @@ void server()
         //fputs("> ", stdout);
         scanf("%c", &op_id);
         //op_id = '1';
+        // st_id = temp.stdID;
+        // op_id = '0'+temp.opID;
+        // int newRoomNumber = temp.roomNo;
         // if (op_id == '2')
         // {
         //     printf("%c %d %d\n", op_id, st_id, temp.roomNo);
@@ -59,14 +64,14 @@ void server()
                 break;
 
             case '2':
+                int newRoomNumber;
                 scanf("%d", &st_id);
-                int newRoomNumber = 0;
                 scanf("%d\n", &newRoomNumber);
                 update(&head, st_id, newRoomNumber);
                 break;
                 
             case'3':
-                scanf("%d", &st_id);
+                //scanf("%d", &st_id);
                 delete(st_id, head);
                 //printFile("disk.tmp");
                 break;
@@ -74,11 +79,18 @@ void server()
                 printFile("disk");
                 break;
         }
+        count++;
+        if (GetTime()-time >= 1)
+        {
+            printf("Throughput: %d\n", count);
+            count = 0;
+            time = GetTime();
+        }
     }
 
     while (head != NULL)
     {
-        removeNode(&head, 1);
+        removeHeadNode(&head, 1);
     }
     printf("Mean Response Time: %lf\n", (GetTime()-time)/(1.0*count));
     printf("Throughput: %lf\n", (1.0*count)/(GetTime()-time));
@@ -154,17 +166,8 @@ void delete(int id, node* head)
     fclose(dbTemp);
     remove("disk");
     rename("disk.tmp", "disk");
-    while(head != NULL)
-    {
-        if (head->student.id != id)
-        {
-            removeNode(&head, 1);
-        }
-        else
-        {
-            removeNode(&head, 0);
-        }
-    }
+    
+    deleteNode(&head, id);
     return;
 }
 

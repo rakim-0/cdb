@@ -3,22 +3,22 @@ DEPORTES: Football Club
 Scenario 1:
 
 Registration complete for 100 students.
-Mean Response Time: 0.000080
-Throughput: 12524.583227
+Mean Response Time: 0.000081
+Throughput: 12337.224977
 
 Scenario 2:
 
 Increased Memory by 20%
 Registration complete for 100 students.
-Mean Response Time: 0.000081
-Throughput: 12382.492514
+Mean Response Time: 0.000088
+Throughput: 11306.707744
 
 Increased Memory by 50%
 Registration complete for 100 students.
-Mean Response Time: 0.000083
-Throughput: 12048.640840
+Mean Response Time: 0.000091
+Throughput: 11004.545727
 
 Scenario 3:
 
-Original times: 169 167 165
-Updated times: 84 83 82
+Original times: 580 176 174
+Updated times: 290 88 87

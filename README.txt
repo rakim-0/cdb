@@ -8,7 +8,10 @@ Veerathu Sindhu     IIB2022006
 
 
 Coded parts:
-Cecily Ambooken - Random/Regular operation generator and Search() in main_memory.c
+Cecily Ambooken - Regular operation generator and Search() in main_memory.c
 Rishab Bohra    - Student_Registration and UpdateFile() method in main_memory.c
-Veerathu Sindhu - Update(), Adding and Removing Nodes and ensuring that linked list doesn't go beyond 5 nodes.
+Veerathu Sindhu - Random operation generator and most of main_memory.c (update/add_node/remove_node etc.)
 Rakim Middya    - File-Handling (searchFile, delete, etc.), Compiled and shell script
+
+FILE HANDLING:  Rakim and Rishab
+LINKED LIST  :  Sindhu and Cecily
