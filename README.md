@@ -6,5 +6,5 @@ Features
 * File-Based Storage: Reliable and efficient storage using file I/O operations
 
 Getting Started
-* Clone the repository: git clone https://github.com/your-username/CDB.git
+* Clone the repository: git clone https://github.com/rakim-0/cdb.git
 * Run `bash run.sh`
